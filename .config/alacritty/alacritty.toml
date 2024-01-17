@@ -1,0 +1,17 @@
+[font]
+size = 11.0
+
+[font.bold]
+family = "JetBrainsMono NFM"
+
+[font.bold_italic]
+family = "JetBrainsMono NFM"
+
+[font.italic]
+family = "JetBrainsMono NFM"
+
+[font.normal]
+family = "JetBrainsMono NFM"
+
+[scrolling]
+history = 50000
