@@ -13,8 +13,5 @@ if [ -f $HOME/.bash_aliases ]; then
     source $HOME/.bash_aliases
 fi
 
-
-XDG_CONFIG_HOME=$HOME/.config
-
 neofetch
 
