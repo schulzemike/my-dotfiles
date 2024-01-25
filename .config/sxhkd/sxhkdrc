@@ -18,7 +18,7 @@ super + F12
 # SUPER + ... KEYS
 #################################################################
 
-#arcolinux-logout
+#archlinux-logout
 super + x
     archlinux-logout
 
@@ -101,16 +101,16 @@ alt + shift + u
 #################################################################
 
 #Raises volume
-XF86AudioRaiseVolume
-    amixer set Master 10%+
+#XF86AudioRaiseVolume
+#    amixer set Master 10%+
 
 #Lowers volume
-XF86AudioLowerVolume
-    amixer set Master 10%-
+#XF86AudioLowerVolume
+#    amixer set Master 10%-
 
 #Mute
-XF86AudioMute
-    amixer -D pulse set Master 1+ toggle
+#XF86AudioMute
+#    amixer -D pulse set Master 1+ toggle
 
 #Playerctl works for Pragha, Spotify and others
 #Delete the line for playerctl if you want to use mpc
@@ -122,26 +122,26 @@ XF86AudioMute
 #mpc stop
 
 #PLAY
-XF86AudioPlay
-    playerctl play-pause
+# XF86AudioPlay
+#     playerctl play-pause
 
 #Next
-XF86AudioNext
-    playerctl next
+#XF86AudioNext
+#    playerctl next
 
 #previous
-XF86AudioPrev
-    playerctl previous
+#XF86AudioPrev
+#    playerctl previous
 
 #Stop
-XF86AudioStop
-    playerctl stop
+#XF86AudioStop
+#    playerctl stop
 
 #Brightness up
-XF86MonBrightnessUp
-    xbacklight -inc 10
+#XF86MonBrightnessUp
+#    xbacklight -inc 10
 
 #Brightness down
-XF86MonBrightnessDown
-    xbacklight -dec 10
+#XF86MonBrightnessDown
+#    xbacklight -dec 10
 
