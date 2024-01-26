@@ -24,10 +24,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import os
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+
+# Config values
+margin = 10
+
+
 
 super = "mod4"
 terminal = guess_terminal()
@@ -89,7 +95,7 @@ keys = [
     Key([super], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([super, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([super, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([super], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    # Key([super], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
 
     # Restart qtile
     Key([super, "shift"], "r", lazy.restart()),
@@ -122,19 +128,19 @@ for i in groups:
     )
 
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
+    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=2, margin=[0, margin, margin, margin]),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
-    # layout.Matrix(),
-    # layout.MonadTall(),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
+    #layout.Stack(num_stacks=2),
+    #layout.Bsp(),
+    #layout.Matrix(),
+    layout.MonadTall(margin=margin),
+    #layout.MonadWide(),
+    #layout.RatioTile(),
+    #layout.Tile(),
+    #layout.TreeTab(),
+    #layout.VerticalTile(),
+    #layout.Zoomy(),
 ]
 
 widget_defaults = dict(
@@ -152,6 +158,7 @@ screens = [
                 widget.GroupBox(),
                 widget.Prompt(),
                 widget.WindowName(),
+                widget.CurrentLayout(),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
@@ -167,6 +174,8 @@ screens = [
                 widget.QuickExit(),
             ],
             24,
+            margin=[margin, margin, margin, margin],
+            background=["#1F1F28"],
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
@@ -174,6 +183,9 @@ screens = [
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
         # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
         # x11_drag_polling_rate = 60,
+        #left=bar.Gap(margin),
+        #right=bar.Gap(margin),
+        #bottom=bar.Gap(margin),
     ),
 ]
 
