@@ -139,7 +139,7 @@ layouts = [
     #layout.RatioTile(),
     #layout.Tile(),
     #layout.TreeTab(),
-    #layout.VerticalTile(),
+    #layout.VerticalTile()
     #layout.Zoomy(),
 ]
 
@@ -158,7 +158,8 @@ screens = [
                 widget.GroupBox(),
                 widget.Prompt(),
                 widget.WindowName(),
-                widget.CurrentLayout(),
+                widget.TextBox("rsdfsf"),
+                widget.Spacer(),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
@@ -175,7 +176,8 @@ screens = [
             ],
             24,
             margin=[margin, margin, margin, margin],
-            background=["#1F1F28"],
+            #background=["#1F1F28"],
+            opacity=0,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
@@ -186,6 +188,9 @@ screens = [
         #left=bar.Gap(margin),
         #right=bar.Gap(margin),
         #bottom=bar.Gap(margin),
+        wallpaper="/usr/share/backgrounds/arcolinux/landscape-3840x2160.jpg",
+        # set the mode to "fill" or "stretch"
+        wallpaper_mode="stretch",
     ),
 ]
 
