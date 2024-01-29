@@ -25,6 +25,7 @@
 # SOFTWARE.
 
 import os
+import subprocess
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
@@ -158,7 +159,6 @@ screens = [
                 widget.GroupBox(),
                 widget.Prompt(),
                 widget.WindowName(),
-                widget.TextBox("rsdfsf"),
                 widget.Spacer(),
                 widget.Chord(
                     chords_colors={
