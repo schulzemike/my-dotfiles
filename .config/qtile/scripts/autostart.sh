@@ -12,5 +12,5 @@ run_once sxhkd -c ~/.config/sxhkd/sxhkdrc &
 # autostart the XDG desktop entries
 # especially the VBoxClinent all - script for clipboard, ...
 # see: /etc/xdg/autostart
-dex -a &
+run_once dex -a
 

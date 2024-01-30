@@ -177,7 +177,6 @@ screens = [
             24,
             margin=[margin, margin, margin, margin],
             #background=["#1F1F28"],
-            opacity=0,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
@@ -200,6 +199,12 @@ mouse = [
     Drag([super], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
     Click([super], "Button2", lazy.window.bring_to_front()),
 ]
+
+@hook.subscribe.startup_once
+def start_once():
+    home = os.path.expanduser('~')
+    subprocess.call([home + '/.config/qtile/scripts/autostart.sh'])
+
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
@@ -240,7 +245,3 @@ wl_input_rules = None
 # java that happens to be on java's whitelist.
 wmname = "qtile"
 
-@hook.subscribe.startup_once
-def start_once():
-    home = os.path.expanduser('~')
-    subprocess.call([home + '/.config/qtile/scripts/autostart.sh'])
