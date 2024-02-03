@@ -4,8 +4,11 @@ return {
     config = function ()
         local lualine = require("lualine")
 
-        lualine.setup({
-            theme = "OceanicNext"
-        })
+        lualine.setup {
+            options = {
+                -- theme = "gruvbox_light",
+                theme = "gruvbox_dark",
+            },
+        }
     end
 }
