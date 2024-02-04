@@ -4,7 +4,11 @@ PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
 
 alias myconfig='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-# Standard aliases
+#
+# --------------- Standard aliases
+#
+
 alias ll="ls -la"
+alias pacman="sudo pacman"
 alias vi="nvim"
 
