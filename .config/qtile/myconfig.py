@@ -33,6 +33,7 @@ from libqtile.utils import guess_terminal
 
 # specific config files
 from groups import groups
+from groups import assign_app_to_group
 from keys import key_binding
 
 
@@ -163,6 +164,10 @@ mouse = [
 def start_once():
     home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/scripts/autostart.sh'])
+
+@hook.subscribe.client_new
+def new_client(client):
+    assign_app_to_group(client)
 
 
 dgroups_key_binder = None

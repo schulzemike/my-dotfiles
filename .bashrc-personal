@@ -1,5 +1,5 @@
 PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
-
+PATH="$PATH:$HOME/.local/bin"
 
 
 alias myconfig='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -12,3 +12,6 @@ alias ll="ls -la"
 alias pacman="sudo pacman"
 alias vi="nvim"
 
+# --------------- nvm settings
+export NVM_DIR="$HOME/.local/nvm"
+source /usr/share/nvm/init-nvm.sh

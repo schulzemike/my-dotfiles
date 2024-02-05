@@ -13,6 +13,14 @@ if [ -f $HOME/.bashrc-personal ]; then
     source $HOME/.bashrc-personal
 fi
 
+if [ -f $HOME/.bashrc-work ]; then
+    source $HOME/.bashrc-work
+fi
+
 eval "$(starship init bash)"
 neofetch
 
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/mike/.local/sdkman"
+[[ -s "/home/mike/.local/sdkman/bin/sdkman-init.sh" ]] && source "/home/mike/.local/sdkman/bin/sdkman-init.sh"
