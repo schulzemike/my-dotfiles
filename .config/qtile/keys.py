@@ -5,6 +5,7 @@ from libqtile.utils import guess_terminal
 from groups import groups
 
 super = "mod4"
+
 terminal = guess_terminal()
 
 
@@ -52,7 +53,7 @@ def init_keys():
     
     
         # Toggle between different layouts as defined below
-        Key([super], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+        Key([super], "space", lazy.next_layout(), desc="Toggle between layouts"),
     
     
         Key([super], "q", lazy.window.kill(), desc="Kill focused window"),
@@ -68,6 +69,14 @@ def init_keys():
         Key([super, "control"], "r", lazy.reload_config(), desc="Reload the config"),
         Key([super, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
         # Key([super], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+
+        # #CHANGE WORKSPACES
+        # Key(["alt", "shift" ], "Tab", lazy.screen.prev_group()),
+        # Key(["alt"], "Tab", lazy.screen.next_group()),
+
+        # CHANGE SCREENS
+        Key([super, "shift"], "Tab", lazy.prev_screen()),
+        Key([super], "Tab", lazy.next_screen()),
     
         # Restart qtile
         Key([super, "shift"], "r", lazy.restart()),

@@ -54,23 +54,23 @@ layouts = [
     layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=2, margin=[0, margin, margin, margin]),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
-    layout.Stack(num_stacks=2),
-    layout.Bsp(),
-    layout.Matrix(),
+    # layout.Stack(num_stacks=2),
+    # layout.Bsp(),
+    # layout.Matrix(),
     layout.MonadTall(margin=margin),
     layout.MonadWide(),
-    layout.RatioTile(),
-    layout.Tile(),
-    layout.TreeTab(),
-    layout.VerticalTile(),
-    layout.Zoomy(),
+    # layout.RatioTile(),
+    # layout.Tile(),
+    # layout.TreeTab(),
+    # layout.VerticalTile(),
+    # layout.Zoomy(),
 ]
 
 
 
 
 widget_defaults = dict(
-    font="sans",
+    font="Noto Sans",
     fontsize=12,
     padding=3,
 )
@@ -79,9 +79,14 @@ extension_defaults = widget_defaults.copy()
 
 def init_widgets():
     widgets = [
+        widget.TextBox(
+            text="",
+            padding=6
+        ),
         widget.CurrentLayout(),
         widget.GroupBox(),
         widget.Prompt(),
+        widget.Spacer(),
         widget.WindowName(),
         widget.Spacer(),
         widget.Chord(
@@ -103,7 +108,7 @@ def init_widgets_for_other_screens():
     widgets = init_widgets()
     # delete the systray
     # del widgets[7:9] if more widgets have to be deleted
-    del widgets[7]
+    del widgets[len(widgets) - 3]
     return widgets
 
 

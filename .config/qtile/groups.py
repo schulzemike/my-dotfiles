@@ -17,6 +17,7 @@ def assign_app_to_group(client):
 
     d[group_names[2]] = ["google-chrome"]
     d[group_names[3]] = ["jetbrains-idea"]
+    d[group_names[5]] = ["keepassxc"]
 
     wm_class = client.window.get_wm_class()[0]
 
