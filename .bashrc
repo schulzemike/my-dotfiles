@@ -2,6 +2,9 @@
 # ~/.bashrc
 #
 
+HISTSIZE=5000
+
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -19,6 +22,7 @@ fi
 
 eval "$(starship init bash)"
 neofetch
+
 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!

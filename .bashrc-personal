@@ -13,6 +13,14 @@ alias ll="ls -la"
 alias pacman="sudo pacman"
 alias vi="nvim"
 
+alias bashp="vi $HOME/.bashrc-personal"
+alias bashw="vi $HOME/.bashrc-work"
+
+
+
+
+
+
 # --------------- nvm settings
 export NVM_DIR="$HOME/.local/nvm"
 source /usr/share/nvm/init-nvm.sh
