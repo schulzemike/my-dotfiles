@@ -26,10 +26,12 @@
 
 import os
 import subprocess
+from enum import Enum
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from libqtile.widget.textbox import TextBox
 
 # specific config files
 from groups import groups
@@ -52,11 +54,14 @@ super = "mod4"
 colors = {
         "bg" : ["#282828", "#282828"],
         "bg0" : ["#282828", "#282828"],
+        "bg2": ["#504945", "#504945"],
         "bg0_h" : ["#1d2021", "#1d2021"],
         "bg1" : ["#3c3836", "#3c3836"],
         "fg" : ["#ebdbb2", "#ebdbb2"],
-}
+        "fg0": ["#fbf1c9", "#fbf1c9"],
+        "gray8": ["#928374", "#928374"],
 
+}
 
 layouts = [
     layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=2, margin=[0, margin, margin, margin]),
@@ -83,6 +88,31 @@ widget_defaults = dict(
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
+
+Orientation = Enum("Orientation", ["TOP_LEFT", "TOP_RIGHT", "BOTTOM_LEFT", "BOTTOM_RIGHT"])
+
+#      
+def slope(orientation, fg_color, bg_color): 
+#    icon = ""
+    icon = "-"
+
+    match orientation:
+        case Orientation.TOP_LEFT:
+            icon = ""
+        case Orientation.TOP_RIGHT:
+            icon = ""
+        case Orientation.BOTTOM_LEFT:
+            icon = ""
+        case Orientation.BOTTOM_RIGHT:
+            icon = ""
+
+    return TextBox(icon,
+       fontsize=22,
+       # fmt="<span rise='6500'>{}</span>",
+       padding=0,
+       background = bg_color,
+       foreground = fg_color,
+    )
 
 
 def init_widgets():
@@ -112,6 +142,7 @@ def init_widgets():
             background = colors["bg1"],
         ),
         widget.WindowName(
+            foreground = colors["fg"],
             background = colors["bg1"],
         ),
         widget.Spacer(
@@ -125,18 +156,40 @@ def init_widgets():
         ),
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
         # widget.StatusNotifier(),
+        widget.TextBox(
+            "",
+            fontsize=22,
+            forground = colors["gray8"],
+            background = colors["bg1"],
+        ),
         widget.Spacer(
             length = 12,
+            background = colors["bg1"],
         ),
-        widget.Systray(),
+        widget.Systray(
+            background = colors["bg1"],
+        ),
         widget.Spacer(
             length = 12,
+            background = colors["bg1"],
         ),
-        widget.Clock(format="%d.%m. %a %I:%M %p",
+        slope(Orientation.TOP_RIGHT, colors["bg2"], colors["bg1"]), 
+        widget.Clock(format="%a. %d.%m. %H:%M:%S",
             foreground = colors["fg"],
+            background = colors["bg2"],
         ),
+        slope(Orientation.TOP_RIGHT, colors["gray8"], colors["bg2"]), 
+        # widget.TextBox(
+        #    "",
+        #    fontsize=22,
+        #    # fmt="<span rise='6500'>{}</span>",
+        #    padding=0,
+        #    background = colors["bg2"],
+        #    foreground = colors["gray8"],
+        # ),
         widget.QuickExit(
-            foreground = colors["fg"],
+           background = colors["gray8"],
+           foreground = colors["bg1"],
         ),
     ]
     return widgets
@@ -145,7 +198,7 @@ def init_widgets_for_other_screens():
     widgets = init_widgets()
     # delete the systray
     # del widgets[7:9] if more widgets have to be deleted
-    del widgets[len(widgets) - 4]
+    del widgets[len(widgets) - 6]
     return widgets
 
 
@@ -254,4 +307,29 @@ wl_input_rules = None
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "qtile"
+
+
+
+
+
+
+def left_triangle(fg_color, bg_color):
+    return widget.TextBox(
+        " ",
+        fontsize=18,
+        fmt="<span rise='6500'>{}</span>",
+        padding=0,
+        background = bg_color,
+        foreground = fg_color,
+        )
+
+def right_triangle(fg_color, bg_color):
+    return widget.TextBox(
+        "",
+        fontsize=18,
+        fmt="<span rise='6500'>{}</span>",
+        padding=0,
+        background = bg_color,
+        foreground = fg_color,
+        )
 
