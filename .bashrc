@@ -2,6 +2,7 @@
 # ~/.bashrc
 #
 
+set -o vi
 HISTSIZE=5000
 
 
