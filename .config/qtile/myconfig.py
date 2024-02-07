@@ -45,9 +45,17 @@ keys = key_binding()
 margin = 10
 
 
+
 terminal = guess_terminal()
 super = "mod4"
 
+colors = {
+        "bg" : ["#282828", "#282828"],
+        "bg0" : ["#282828", "#282828"],
+        "bg0_h" : ["#1d2021", "#1d2021"],
+        "bg1" : ["#3c3836", "#3c3836"],
+        "fg" : ["#ebdbb2", "#ebdbb2"],
+}
 
 
 layouts = [
@@ -70,7 +78,7 @@ layouts = [
 
 
 widget_defaults = dict(
-    font="sans",
+    font="Noto Sans",
     fontsize=12,
     padding=3,
 )
@@ -79,12 +87,36 @@ extension_defaults = widget_defaults.copy()
 
 def init_widgets():
     widgets = [
-        widget.CurrentLayout(),
+        widget.TextBox(
+            " ",
+            padding = 11,
+            background = colors["bg1"],
+        ),
+        widget.Spacer(
+            length = 24,
+        ),
+        widget.CurrentLayout(
+            padding = 12,
+            foreground = colors["fg"],
+            background = colors["bg1"],
+        ),
+        widget.Spacer(
+            length = 12,
+        ),
         widget.GroupBox(),
+        widget.Spacer(
+            length = 12,
+        ),
         widget.Prompt(),
-        widget.Spacer(),
-        widget.WindowName(),
-        widget.Spacer(),
+        widget.Spacer(
+            background = colors["bg1"],
+        ),
+        widget.WindowName(
+            background = colors["bg1"],
+        ),
+        widget.Spacer(
+            background = colors["bg1"],
+        ),
         widget.Chord(
             chords_colors={
                 "launch": ("#ff0000", "#ffffff"),
@@ -93,9 +125,19 @@ def init_widgets():
         ),
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
         # widget.StatusNotifier(),
+        widget.Spacer(
+            length = 12,
+        ),
         widget.Systray(),
-        widget.Clock(format="%d. %m. %a %I:%M %p"),
-        widget.QuickExit(),
+        widget.Spacer(
+            length = 12,
+        ),
+        widget.Clock(format="%d.%m. %a %I:%M %p",
+            foreground = colors["fg"],
+        ),
+        widget.QuickExit(
+            foreground = colors["fg"],
+        ),
     ]
     return widgets
 
@@ -103,7 +145,7 @@ def init_widgets_for_other_screens():
     widgets = init_widgets()
     # delete the systray
     # del widgets[7:9] if more widgets have to be deleted
-    del widgets[len(widgets) - 3]
+    del widgets[len(widgets) - 4]
     return widgets
 
 
@@ -113,7 +155,10 @@ screens = [
             init_widgets(),
             size=24,
             margin=[margin, margin, margin, margin],
-            #background=["#1F1F28"],
+            # for transparent bar
+            # background=["#00000000"],
+            # opacity=1,
+            background=colors["bg0_h"],
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
@@ -133,6 +178,7 @@ screens = [
             init_widgets_for_other_screens(),
             size=24,
             margin=[margin, margin, margin, margin],
+            background=colors["bg0_h"],
         ),
         wallpaper="/usr/share/backgrounds/arcolinux/landscape-3840x2160.jpg",
         # set the mode to "fill" or "stretch"
