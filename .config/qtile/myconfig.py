@@ -70,7 +70,7 @@ layouts = [
 
 
 widget_defaults = dict(
-    font="Noto Sans",
+    font="sans",
     fontsize=12,
     padding=3,
 )
@@ -79,10 +79,6 @@ extension_defaults = widget_defaults.copy()
 
 def init_widgets():
     widgets = [
-        widget.TextBox(
-            text="",
-            padding=6
-        ),
         widget.CurrentLayout(),
         widget.GroupBox(),
         widget.Prompt(),
@@ -95,7 +91,6 @@ def init_widgets():
             },
             name_transform=lambda name: name.upper(),
         ),
-        widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
         # widget.StatusNotifier(),
         widget.Systray(),
