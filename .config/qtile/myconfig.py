@@ -52,26 +52,44 @@ terminal = guess_terminal()
 super = "mod4"
 
 colors = {
-        "bg" : ["#282828", "#282828"],
-        "bg0" : ["#282828", "#282828"],
-        "bg2": ["#504945", "#504945"],
-        "bg0_h" : ["#1d2021", "#1d2021"],
-        "bg1" : ["#3c3836", "#3c3836"],
-        "fg" : ["#ebdbb2", "#ebdbb2"],
-        "fg0": ["#fbf1c9", "#fbf1c9"],
-        "gray8": ["#928374", "#928374"],
+    "bg" : ["#282828", "#282828"],
+    "bg0" : ["#282828", "#282828"],
+    "bg2": ["#504945", "#504945"],
+    "bg0_h" : ["#1d2021", "#1d2021"],
+    "bg1" : ["#3c3836", "#3c3836"],
+    "fg" : ["#ebdbb2", "#ebdbb2"],
+    "fg0": ["#fbf1c9", "#fbf1c9"],
+    "gray": ["#a89984", "#a89984"],
+    "gray8": ["#928374", "#928374"],
+    "green":["#98971a", "#98971a"],
+    "orange":["#d65d0e","#d65d0e"],
+    "orange_light":["#fe8019","#fe8019"],
+    "yellow":["#d79921","#d79921"],
 
 }
 
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=2, margin=[0, margin, margin, margin]),
-    layout.Max(),
+    layout.Columns(
+        border_focus=colors["orange"],
+        border_focus_stack=colors["green"],
+        border_normal_stack=colors["yellow"],
+        border_on_single=True,
+        border_width=2,
+        margin=margin
+    ),
+    layout.Max(
+        border_focus=colors["orange"],
+        border_width=2,
+        margin=margin),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    layout.MonadTall(margin=margin),
-    layout.MonadWide(),
+    layout.MonadTall(
+        border_focus=colors["orange"],
+        margin=margin,
+    ),
+    # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
     # layout.TreeTab(),
@@ -122,22 +140,34 @@ def init_widgets():
             padding = 11,
             background = colors["bg1"],
         ),
+        slope(Orientation.TOP_LEFT, colors["bg1"], colors["gray8"]),
         widget.Spacer(
             length = 24,
+            background = colors["gray8"],
         ),
+        slope(Orientation.TOP_LEFT, colors["gray8"], colors["bg1"]),
         widget.CurrentLayout(
             padding = 12,
             foreground = colors["fg"],
             background = colors["bg1"],
         ),
+        slope(Orientation.TOP_LEFT, colors["bg1"], colors["bg"]),
         widget.Spacer(
-            length = 12,
+            length = 8,
+            background = colors["bg"],
         ),
-        widget.GroupBox(),
+        widget.GroupBox(
+            background = colors["bg"],
+            disable_drag = True,
+            this_current_screen_border = colors["orange"],
+            this_screen_border = colors["gray"],
+        ),
         widget.Spacer(
-            length = 12,
+            length = 8,
+            background = colors["bg"],
         ),
-        widget.Prompt(),
+        slope(Orientation.TOP_LEFT, colors["bg"], colors["bg1"]),
+        # widget.Prompt(),
         widget.Spacer(
             background = colors["bg1"],
         ),
@@ -157,8 +187,8 @@ def init_widgets():
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
         # widget.StatusNotifier(),
         widget.TextBox(
-            "",
-            fontsize=22,
+            "",
+            fontsize=20,
             forground = colors["gray8"],
             background = colors["bg1"],
         ),
@@ -188,8 +218,9 @@ def init_widgets():
         #    foreground = colors["gray8"],
         # ),
         widget.QuickExit(
-           background = colors["gray8"],
-           foreground = colors["bg1"],
+            default_text = "   [ logout ]    ",
+            background = colors["gray8"],
+            foreground = colors["bg1"],
         ),
     ]
     return widgets
@@ -207,7 +238,7 @@ screens = [
         top=bar.Bar(
             init_widgets(),
             size=24,
-            margin=[margin, margin, margin, margin],
+            margin=[margin, margin, 0, margin],
             # for transparent bar
             # background=["#00000000"],
             # opacity=1,
@@ -230,7 +261,7 @@ screens = [
         top=bar.Bar(
             init_widgets_for_other_screens(),
             size=24,
-            margin=[margin, margin, margin, margin],
+            margin=[margin, margin, 0, margin],
             background=colors["bg0_h"],
         ),
         wallpaper="/usr/share/backgrounds/arcolinux/landscape-3840x2160.jpg",
@@ -275,6 +306,8 @@ follow_mouse_focus = True
 bring_front_click = False
 floats_kept_above = True
 cursor_warp = False
+
+
 floating_layout = layout.Floating(
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
@@ -285,11 +318,15 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
-    ]
+    ],
+    border_focus=colors["gray"],
+    
 )
+
+
 auto_fullscreen = True
-focus_on_window_activation = "smart"
-reconfigure_screens = True
+focus_on_window_activation = "focus" # or smart
+# reconfigure_screens = True
 
 # If things like steam games want to auto-minimize themselves when losing
 # focus, should we respect this or not?

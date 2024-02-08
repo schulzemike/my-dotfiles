@@ -3,12 +3,12 @@ from libqtile.config import Group, ScratchPad, DropDown
 group_names = ["1", "2", "web", "ide", "teams", "6"]
 
 groups = [
-    Group(group_names[0], layout = "columns"),
-    Group(group_names[1], layout = "monadtall"),
-    Group(group_names[2], layout = "monadtall"),
-    Group(group_names[3], layout = "monadtall"),
-    Group(group_names[4], layout = "monadtall"),
-    Group(group_names[5], layout = "monadtall"),
+    Group(name=group_names[0], layout = "columns"),
+    Group(name=group_names[1], layout = "monadtall"),
+    Group(name=group_names[2], screen_affinity=1, layout = "max"),
+    Group(name=group_names[3], layout = "max"),
+    Group(name=group_names[4], layout = "monadtall"),
+    Group(name=group_names[5], screen_affinity=1, layout = "monadtall"),
     ScratchPad("sc", [DropDown("term", "alacritty")]),
 ]
 
@@ -25,4 +25,5 @@ def assign_app_to_group(client):
         if wm_class in list(d.values())[i]:
             group = list(d.keys())[i]
             client.togroup(group)
+            # group.toscreen(1, toggle=True)
             client.group.cmd_toscreen(toggle=False)
