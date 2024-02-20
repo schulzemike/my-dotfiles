@@ -24,3 +24,17 @@ alias bashw="vi $HOME/.bashrc-work"
 # --------------- nvm settings
 export NVM_DIR="$HOME/.local/nvm"
 source /usr/share/nvm/init-nvm.sh
+
+create-script () {
+    
+    [[ -z "$1" ]] && echo "Please provide a filename without the file postfix" && return 1
+
+    SCRIPT="$1".sh
+
+    echo "#!/bin/bash" > $SCRIPT
+    chmod +x $SCRIPT
+}
+
+
+# --------------- terraform settings
+export TF_CLI_CONFIG_FILE=$XDG_CONFIG_HOME/terraform/terraform.rc
