@@ -64,6 +64,8 @@ colors = {
     "green":["#98971a", "#98971a"],
     "orange":["#d65d0e","#d65d0e"],
     "orange_light":["#fe8019","#fe8019"],
+    "red":["#cc241d","#cc241d"],
+    "red_9":["#fb4934","#fb4934"],
     "yellow":["#d79921","#d79921"],
 
 }
@@ -135,10 +137,12 @@ def slope(orientation, fg_color, bg_color):
 
 def init_widgets():
     widgets = [
-        widget.TextBox(
-            " ",
-            padding = 11,
+        widget.GenPollCommand(
             background = colors["bg1"],
+            cmd = "${XDG_CONFIG_HOME}/qtile/scripts/w_status_hostsystem.sh \#cc241d",
+            padding = 11,
+            shell = True,
+            update_interval = 30,
         ),
         slope(Orientation.TOP_LEFT, colors["bg1"], colors["gray8"]),
         widget.Spacer(
