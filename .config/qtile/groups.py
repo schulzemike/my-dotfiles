@@ -1,3 +1,4 @@
+from libqtile import qtile
 from libqtile.config import Group, ScratchPad, DropDown
 
 group_names = ["1", "2", "web", "ide", "teams", "6"]
@@ -24,6 +25,14 @@ def assign_app_to_group(client):
     for i in range(len(d)):
         if wm_class in list(d.values())[i]:
             group = list(d.keys())[i]
-            client.togroup(group)
+            client.togroup(group, switch_group=True),
             # group.toscreen(1, toggle=True)
-            client.group.cmd_toscreen(toggle=False)
+#            client.group.toscreen()
+#            print(" mike")
+            #if len(qtile.screens) > 1  (group.scre
+#            qtile.focus_screen(1)
+#            qtile.groups_map[client.group.name].toscreen()
+
+
+
+

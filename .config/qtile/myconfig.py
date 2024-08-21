@@ -188,6 +188,16 @@ def init_widgets():
             },
             name_transform=lambda name: name.upper(),
         ),
+        widget.TextBox("󰕾",
+            background = colors["bg1"],
+            foreground = colors["fg"],
+        ),
+        widget.Volume(
+            background = colors["bg1"],
+            emoji = False,
+            emoji_list = ['󰖁','󰕿','󰖀','󰕾'],
+            foreground = colors["fg"],
+        ),
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
         # widget.StatusNotifier(),
         widget.TextBox(
@@ -322,6 +332,7 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
+        Match(wm_class="de-eurodata-commons-swing-AbstractSwingApplication"),
     ],
     border_focus=colors["gray"],
     

@@ -16,7 +16,10 @@ alias vi="nvim"
 alias bashp="vi $HOME/.bashrc-personal"
 alias bashw="vi $HOME/.bashrc-work"
 
-
+# alias to restart the networkservice, mijght be required if the host ist losing the VPN connection.
+# sometimes after the connection has been reinstablished the guest ist not picking up on this new 
+# connection
+alias restart-network="sudo systemctl restart systemd-networkd"
 
 
 
@@ -35,6 +38,9 @@ create-script () {
     chmod +x $SCRIPT
 }
 
+# --------------- taskwarrior settings -----------------------------
+export TASKRC=$XDG_CONFIG_HOME/task/taskrc
+export TASKDATA=$XDG_DATA_HOME/task
 
 # --------------- terraform settings
 export TF_CLI_CONFIG_FILE=$XDG_CONFIG_HOME/terraform/terraform.rc

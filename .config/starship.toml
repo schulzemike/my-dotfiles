@@ -17,5 +17,11 @@ disabled = true
 disabled = true
 
 [gcloud]
+disabled = true
 format = 'on [$symbol$account(@$domain)(\($project\))]($style) '
 
+[kubernetes]
+disabled = false
+
+[line_break]
+disabled = true
