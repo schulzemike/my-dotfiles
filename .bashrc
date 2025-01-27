@@ -22,7 +22,7 @@ if [ -f $HOME/.bashrc-work ]; then
 fi
 
 eval "$(starship init bash)"
-neofetch
+fastfetch
 
 
 
