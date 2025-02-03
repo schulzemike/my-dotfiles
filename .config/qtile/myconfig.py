@@ -282,6 +282,17 @@ screens = [
         # set the mode to "fill" or "stretch"
         wallpaper_mode="fill",
     ),
+    Screen(
+        top=bar.Bar(
+            init_widgets_for_other_screens(),
+            size=24,
+            margin=[margin, margin, 0, margin],
+            background=colors["bg0_h"],
+        ),
+        wallpaper="/usr/share/backgrounds/arcolinux/landscape-3840x2160.jpg",
+        # set the mode to "fill" or "stretch"
+        wallpaper_mode="fill",
+    ),
 ]
 
 
