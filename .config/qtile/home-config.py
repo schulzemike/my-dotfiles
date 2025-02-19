@@ -267,9 +267,9 @@ screens = [
         #left=bar.Gap(margin),
         #right=bar.Gap(margin),
         #bottom=bar.Gap(margin),
-        # wallpaper="/usr/share/backgrounds/arcolinux/landscape-3840x2160.jpg",
+        wallpaper="/usr/share/backgrounds/mountains.jpg",
         # set the mode to "fill" or "stretch"
-        # wallpaper_mode="stretch",
+        wallpaper_mode="stretch",
     ),
 #     Screen(
 #         top=bar.Bar(
