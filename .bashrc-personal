@@ -25,8 +25,8 @@ alias restart-network="sudo systemctl restart systemd-networkd"
 
 
 # --------------- nvm settings
-export NVM_DIR="$HOME/.local/nvm"
-source /usr/share/nvm/init-nvm.sh
+# export NVM_DIR="$HOME/.local/nvm"
+# source /usr/share/nvm/init-nvm.sh
 
 create-script () {
     
