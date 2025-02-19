@@ -1,3 +1,6 @@
 //@theme "/usr/share/rofi/themes/android_notification.rasi"
 //@theme "/usr/share/rofi/themes/android_notification.rasi"
+configuration {
+ font: "JetBrainsMono NFM 13";
+ }
 @theme "/usr/share/rofi/themes/gruvbox-dark.rasi"
