@@ -13,6 +13,7 @@ alias ll="ls -la"
 alias pacman="sudo pacman"
 alias vi="nvim"
 
+
 alias bashp="vi $HOME/.bashrc-personal"
 alias bashw="vi $HOME/.bashrc-work"
 
@@ -39,8 +40,8 @@ create-script () {
 }
 
 # --------------- taskwarrior settings -----------------------------
-export TASKRC=$XDG_CONFIG_HOME/task/taskrc
-export TASKDATA=$XDG_DATA_HOME/task
+# export TASKRC=$XDG_CONFIG_HOME/task/taskrc
+# export TASKDATA=$XDG_DATA_HOME/task
 
 # --------------- terraform settings
 export TF_CLI_CONFIG_FILE=$XDG_CONFIG_HOME/terraform/terraform.rc

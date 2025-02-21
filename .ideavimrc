@@ -3,11 +3,12 @@
 " You can find a list of commands here: https://jb.gg/h38q75
 " Find more examples here: https://jb.gg/share-ideavimrc
 
+let mapleader = " "
 
 "" -- Suggested options --
 " Show a few lines of context around the cursor. Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
-set scrolloff=5
+set scrolloff=10
 
 " Do incremental searching.
 set incsearch
@@ -33,6 +34,17 @@ Plug 'tpope/vim-commentary'
 "" Map \b to toggle the breakpoint on the current line
 "map \b <Action>(ToggleLineBreakpoint)
 
-:set ignorecase
-:set smartcase
-:set hlsearch
+"" Search configuration
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+
+"" General editor options
+set relativenumber
+set linenumber
+set showmode
+set showcmd
+set clipboard+=unnamed
+
+set surround

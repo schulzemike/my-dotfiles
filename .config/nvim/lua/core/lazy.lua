@@ -16,4 +16,12 @@ vim.opt.rtp:prepend(lazypath)
 
 -- read the plugins from their own lua files inside
 -- the plugin directory placed inside the lua folder
-require("lazy").setup("plugins")
+require("lazy").setup({
+  spec = {
+    -- import your plugins
+    {import = "plugins"},
+  },
+  rocks = {
+      enabled = false,
+  },
+})
