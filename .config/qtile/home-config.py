@@ -27,11 +27,15 @@
 import os
 import subprocess
 from enum import Enum
-from libqtile import bar, layout, widget, hook
+from libqtile import bar, layout, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.widget.textbox import TextBox
+
+# qtile-extras
+from qtile_extras import widget
+from qtile_extras.popup.toolkit import PopupRelativeLayout, PopupText, PopupSlider
 
 # specific config files
 from groups import groups
@@ -46,6 +50,8 @@ keys = key_binding()
 # Config values
 margin = 10
 
+default_font = "Noto Sans"
+font_size = 12
 
 
 terminal = guess_terminal()
@@ -103,8 +109,8 @@ layouts = [
 
 
 widget_defaults = dict(
-    font="Noto Sans",
-    fontsize=12,
+    font=default_font,
+    fontsize=font_size,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
@@ -134,6 +140,36 @@ def slope(orientation, fg_color, bg_color):
        foreground = fg_color,
     )
 
+
+VOLUME_NOTIFICATION = PopupRelativeLayout(
+    width=200,
+    height=50,
+    controls=[
+        PopupText(
+            text="Volume:",
+            name="text",
+            pos_x=0.1,
+            pos_y=0.1,
+            height=0.2,
+            width=0.8,
+            v_align="middle",
+            h_align="center",
+        ),
+        PopupSlider(
+            name="volume",
+            pos_x=0.1,
+            pos_y=0.3,
+            width=0.8,
+            height=0.8,
+            colour_below="00ffff",
+            bar_border_size=2,
+            bar_border_margin=1,
+            bar_size=6,
+            marker_size=0,
+            end_margin=0,
+        ),
+    ],
+)
 
 def init_widgets():
     widgets = [
@@ -188,15 +224,22 @@ def init_widgets():
             },
             name_transform=lambda name: name.upper(),
         ),
-        widget.TextBox("󰕾",
+        widget.PulseVolumeExtra(
             background = colors["bg1"],
-            foreground = colors["fg"],
-        ),
-        widget.Volume(
-            background = colors["bg1"],
-            emoji = False,
+            bar_colour_normal = colors["green"],
+            bar_colour_high = colors["orange"],
+            bar_colour_loud = colors["red"],
+            bar_colour_mute = colors["gray8"],
+            bar_height = 16,
+            emoji = True,
             emoji_list = ['󰖁','󰕿','󰖀','󰕾'],
-            foreground = colors["fg"],
+            font = default_font,
+            fontsize = font_size,
+            icon_size = 16,
+            bar_text_foreground = colors["fg"],
+            mode = "both",
+            popup_layout = VOLUME_NOTIFICATION,
+            theme_path = "/usr/share/icons/Papirus-Dark",
         ),
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
         # widget.StatusNotifier(),
@@ -271,28 +314,6 @@ screens = [
         # set the mode to "fill" or "stretch"
         wallpaper_mode="stretch",
     ),
-#     Screen(
-#         top=bar.Bar(
-#             init_widgets_for_other_screens(),
-#             size=24,
-#             margin=[margin, margin, 0, margin],
-#             background=colors["bg0_h"],
-#         ),
-#         wallpaper="/usr/share/backgrounds/arcolinux/landscape-3840x2160.jpg",
-#         # set the mode to "fill" or "stretch"
-#         wallpaper_mode="fill",
-#     ),
-#     Screen(
-#         top=bar.Bar(
-#             init_widgets_for_other_screens(),
-#             size=24,
-#             margin=[margin, margin, 0, margin],
-#             background=colors["bg0_h"],
-#         ),
-#         wallpaper="/usr/share/backgrounds/arcolinux/landscape-3840x2160.jpg",
-#         # set the mode to "fill" or "stretch"
-#         wallpaper_mode="fill",
-#     ),
 ]
 
 

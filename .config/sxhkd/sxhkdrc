@@ -101,16 +101,16 @@ alt + shift + u
 #################################################################
 
 #Raises volume
-#XF86AudioRaiseVolume
-#    amixer set Master 10%+
+XF86AudioRaiseVolume
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+
 
 #Lowers volume
-#XF86AudioLowerVolume
-#    amixer set Master 10%-
+XF86AudioLowerVolume
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
 
 #Mute
-#XF86AudioMute
-#    amixer -D pulse set Master 1+ toggle
+XF86AudioMute
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
 #Playerctl works for Pragha, Spotify and others
 #Delete the line for playerctl if you want to use mpc
