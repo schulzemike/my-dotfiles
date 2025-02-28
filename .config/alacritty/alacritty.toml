@@ -1,18 +1,22 @@
 
 [font]
-size = 9.0
+size = 10.0
 
 [font.bold]
 family = "JetBrainsMono NFM"
+style = "Bold"
 
 [font.bold_italic]
 family = "JetBrainsMono NFM"
+style = "Bold Italic"
 
 [font.italic]
 family = "JetBrainsMono NFM"
+style = "Italic"
 
 [font.normal]
 family = "JetBrainsMono NFM"
+style = "Regular"
 
 [scrolling]
 history = 50000
@@ -27,3 +31,6 @@ bindings = [
 import = [
     "~/.config/alacritty/themes/gruvbox_dark.toml"
 ]
+
+[env]
+WINIT_X11_SCALE_FACTOR = "1.0"

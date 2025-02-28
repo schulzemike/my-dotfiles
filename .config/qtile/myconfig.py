@@ -27,11 +27,14 @@
 import os
 import subprocess
 from enum import Enum
-from libqtile import bar, layout, widget, hook
+from libqtile import bar, layout, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.widget.textbox import TextBox
+
+# qtile-extras
+from qtile_extras import widget
 
 # specific config files
 from groups import groups
@@ -46,6 +49,8 @@ keys = key_binding()
 # Config values
 margin = 10
 
+default_font = "Noto Sans"
+font_size = 12
 
 
 terminal = guess_terminal()
@@ -103,8 +108,8 @@ layouts = [
 
 
 widget_defaults = dict(
-    font="Noto Sans",
-    fontsize=12,
+    font=default_font,
+    fontsize=font_size,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
@@ -188,15 +193,19 @@ def init_widgets():
             },
             name_transform=lambda name: name.upper(),
         ),
-        widget.TextBox("󰕾",
+        widget.PulseVolumeExtra(
             background = colors["bg1"],
-            foreground = colors["fg"],
-        ),
-        widget.Volume(
-            background = colors["bg1"],
-            emoji = False,
-            emoji_list = ['󰖁','󰕿','󰖀','󰕾'],
-            foreground = colors["fg"],
+            bar_colour_normal = colors["green"],
+            bar_colour_high = colors["orange"],
+            bar_colour_loud = colors["red"],
+            bar_colour_mute = colors["gray8"],
+            bar_height = 16,
+            font = default_font,
+            fontsize = font_size,
+            icon_size = 16,
+            bar_text_foreground = colors["fg"],
+            mode = "bar",
+            theme_path = "/usr/share/icons/Papirus-Dark",
         ),
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
         # widget.StatusNotifier(),
@@ -352,10 +361,6 @@ floating_layout = layout.Floating(
 
 auto_fullscreen = True
 focus_on_window_activation = "focus" # or smart
-# reconfigure_screens = True
-
-# If things like steam games want to auto-minimize themselves when losing
-# focus, should we respect this or not?
 auto_minimize = True
 
 # When using the Wayland backend, this can be used to configure input devices.
