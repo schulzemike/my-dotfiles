@@ -1,5 +1,6 @@
 PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
 PATH="$PATH:$HOME/.local/bin"
+EDITOR=/sbin/nvim
 
 
 alias myconfig='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -22,6 +23,7 @@ alias bashw="vi $HOME/.bashrc-work"
 # connection
 alias restart-network="sudo systemctl restart systemd-networkd"
 
+alias update-mirrors="sudo reflector --protocol https --latest 20 --sort rate --save /etc/pacman.d/mirrorlist"
 
 
 

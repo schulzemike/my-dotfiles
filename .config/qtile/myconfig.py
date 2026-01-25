@@ -27,24 +27,83 @@
 import os
 import subprocess
 from enum import Enum
-from libqtile import bar, layout, hook
+from libqtile import bar, layout, hook, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.widget.textbox import TextBox
 
 # qtile-extras
-from qtile_extras import widget
+# from qtile_extras import widget
 
 # specific config files
-from groups import groups
-from groups import assign_app_to_group
-from keys import key_binding
+from vm_keys import key_binding
 
 
 keys = key_binding()
 
 
+
+super = "mod4"
+
+
+
+# ------------------------------------------
+# Set up the groups
+# ------------------------------------------
+
+# 
+# group_names = ["1", "", "3", "4", "5", "6"]
+group_names = ["1", "2", "3", "4", "5", "6"]
+
+groups = [
+    Group(name=group_names[0], layout = "columns"),
+    Group(name=group_names[1], layout = "max"),
+    Group(name=group_names[2], screen_affinity=1, layout = "max"),
+    Group(name=group_names[3], layout = "columns"),
+    Group(name=group_names[4], layout = "columns"),
+    Group(name=group_names[5], layout = "columns"),
+    ScratchPad("sc", [DropDown("term", "alacritty")]),
+]
+
+def assign_app_to_group(client):
+    d = {}
+
+    d[group_names[1]] = ["jetbrains-idea"]
+    d[group_names[2]] = ["google-chrome"]
+    d[group_names[3]] = []
+    d[group_names[5]] = ["keepassxc"]
+
+    wm_class = client.window.get_wm_class()[0]
+
+    for i in range(len(d)):
+        if wm_class in list(d.values())[i]:
+            group = list(d.keys())[i]
+            client.togroup(group, switch_group=True)
+
+
+def group_keys():
+    keys = []
+    # Switch to the groups, we use fix mappings, because we also have 
+    # at least one scratchpad
+    keys_for_groups = ["1", "2", "3", "4", "5", "6", "7", "8", "9" ,"0"]
+    
+    for index, group in enumerate(groups):
+        if index < len(keys_for_groups):
+            keys.extend([
+                Key([super], keys_for_groups[index], lazy.group[group.name].toscreen(), desc="Switch to group {}".format(group.name)),
+                Key([super, "shift"], keys_for_groups[index], lazy.window.togroup(group.name, switch_group=False), desc="Move focused window to group {}".format(group.name)),
+            ])
+    
+    
+    keys.extend([Key([super], "F9", lazy.group["sc"].dropdown_toggle("term"))])
+    return keys
+
+keys.extend(group_keys())
+
+
+
+# end of groups
 
 # Config values
 margin = 10
@@ -54,7 +113,6 @@ font_size = 12
 
 
 terminal = guess_terminal()
-super = "mod4"
 
 colors = {
     "bg" : ["#282828", "#282828"],
@@ -193,20 +251,20 @@ def init_widgets():
             },
             name_transform=lambda name: name.upper(),
         ),
-        widget.PulseVolumeExtra(
-            background = colors["bg1"],
-            bar_colour_normal = colors["green"],
-            bar_colour_high = colors["orange"],
-            bar_colour_loud = colors["red"],
-            bar_colour_mute = colors["gray8"],
-            bar_height = 16,
-            font = default_font,
-            fontsize = font_size,
-            icon_size = 16,
-            bar_text_foreground = colors["fg"],
-            mode = "bar",
-            theme_path = "/usr/share/icons/Papirus-Dark",
-        ),
+#         widget.PulseVolumeExtra(
+#             background = colors["bg1"],
+#             bar_colour_normal = colors["green"],
+#             bar_colour_high = colors["orange"],
+#             bar_colour_loud = colors["red"],
+#             bar_colour_mute = colors["gray8"],
+#             bar_height = 16,
+#             font = default_font,
+#             fontsize = font_size,
+#             icon_size = 16,
+#             bar_text_foreground = colors["fg"],
+#             mode = "bar",
+#             theme_path = "/usr/share/icons/Papirus-Dark",
+#         ),
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
         # widget.StatusNotifier(),
         widget.TextBox(
@@ -276,9 +334,9 @@ screens = [
         #left=bar.Gap(margin),
         #right=bar.Gap(margin),
         #bottom=bar.Gap(margin),
-        # wallpaper="/usr/share/backgrounds/arcolinux/landscape-3840x2160.jpg",
+        wallpaper="~/.local/share/wallpapers/beautiful-shot-snowy-mountain-sunset.jpg",
         # set the mode to "fill" or "stretch"
-        # wallpaper_mode="stretch",
+        wallpaper_mode="fill",
     ),
     Screen(
         top=bar.Bar(
@@ -287,9 +345,10 @@ screens = [
             margin=[margin, margin, 0, margin],
             background=colors["bg0_h"],
         ),
-        # wallpaper="/usr/share/backgrounds/arcolinux/landscape-3840x2160.jpg",
+        # wallpaper="~/.local/share/wallpapers/tall-trees-forest-mountains-covered-with-fog.jpg",
+        wallpaper="~/.local/share/wallpapers/beautiful-shot-snowy-mountain-sunset.jpg",
         # set the mode to "fill" or "stretch"
-        # wallpaper_mode="fill",
+        wallpaper_mode="fill",
     ),
     Screen(
         top=bar.Bar(
@@ -298,9 +357,9 @@ screens = [
             margin=[margin, margin, 0, margin],
             background=colors["bg0_h"],
         ),
-        # wallpaper="/usr/share/backgrounds/arcolinux/landscape-3840x2160.jpg",
+        wallpaper="~/.local/share/wallpapers/beautiful-shot-snowy-mountain-sunset.jpg",
         # set the mode to "fill" or "stretch"
-        # wallpaper_mode="fill",
+        wallpaper_mode="fill",
     ),
 ]
 

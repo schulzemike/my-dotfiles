@@ -40,7 +40,7 @@ from qtile_extras.popup.toolkit import PopupRelativeLayout, PopupText, PopupSlid
 # specific config files
 from groups import groups
 from groups import assign_app_to_group
-from keys import key_binding
+from home-keys import key_binding
 
 
 keys = key_binding()

@@ -14,3 +14,6 @@ run_once sxhkd -c ~/.config/sxhkd/sxhkdrc &
 # see: /etc/xdg/autostart
 run_once dex -a
 
+# autostart flameshot
+run_once flameshot
+
