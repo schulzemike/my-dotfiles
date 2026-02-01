@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
 PATH="$PATH:$HOME/.local/bin"
 EDITOR=/sbin/nvim
@@ -26,6 +28,12 @@ alias restart-network="sudo systemctl restart systemd-networkd"
 alias update-mirrors="sudo reflector --protocol https --latest 20 --sort rate --save /etc/pacman.d/mirrorlist"
 
 
+# window manager aliases
+alias qtile-log="vi $XDG_DATA_HOME/qtile/qtile.log"
+alias qtile-log-clear="rm $XDG_DATA_HOME/qtile/*"
+alias qtile-conf="cd $XDG_CONFIG_HOME/qtile"
+
+
 
 # --------------- nvm settings
 # export NVM_DIR="$HOME/.local/nvm"
@@ -37,7 +45,7 @@ create-script () {
 
     SCRIPT="$1".sh
 
-    echo "#!/bin/bash" > $SCRIPT
+    echo "#!/usr/bin/env bash" > $SCRIPT
     chmod +x $SCRIPT
 }
 
@@ -47,3 +55,10 @@ create-script () {
 
 # --------------- terraform settings
 export TF_CLI_CONFIG_FILE=$XDG_CONFIG_HOME/terraform/terraform.rc
+
+
+# --------------- syntax highlighting for man pages
+export MANPAGER="nvim +Man!"
+
+
+

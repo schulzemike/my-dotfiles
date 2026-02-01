@@ -132,6 +132,8 @@ config.set('content.local_content_can_access_remote_urls', True, 'file:///home/m
 config.set('content.local_content_can_access_file_urls', False, 'file:///home/mike/.local/share/qutebrowser/userscripts/*')
 
 
+config.set('hints.mode','word')
+
 
 # search engines
 c.url.searchengines = {
@@ -146,10 +148,6 @@ c.url.searchengines = {
         }
 
 c.completion.open_categories = ['searchengines', 'quickmarks', 'bookmarks', 'history', 'filesystem']
-
-
-
-
 
 
 c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 9, 'right': 9}

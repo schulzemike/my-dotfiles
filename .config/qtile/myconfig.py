@@ -36,16 +36,83 @@ from libqtile.widget.textbox import TextBox
 # qtile-extras
 # from qtile_extras import widget
 
-# specific config files
-from vm_keys import key_binding
 
 
-keys = key_binding()
+terminal = guess_terminal()
+mod = "mod4"
 
 
+keys = [
 
-super = "mod4"
+   # A list of available commands that can be bound to keys can be found
+   # at https://docs.qtile.org/en/latest/manual/config/lazy.html
+   # Switch between windows
+   Key([mod], "left", lazy.layout.left(), desc="Move focus to left"),
+   Key([mod], "right", lazy.layout.right(), desc="Move focus to right"),
+   Key([mod], "down", lazy.layout.down(), desc="Move focus down"),
+   Key([mod], "up", lazy.layout.up(), desc="Move focus up"),
+   Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+   
 
+   # Move windows between left/right columns or move up/down in current stack.
+   # Moving out of range in Columns layout will create new column.
+   Key([mod, "shift"], "left", lazy.layout.shuffle_left(), desc="Move window to the left"),
+   Key([mod, "shift"], "right", lazy.layout.shuffle_right(), desc="Move window to the right"),
+   Key([mod, "shift"], "down", lazy.layout.shuffle_down(), desc="Move window down"),
+   Key([mod, "shift"], "up", lazy.layout.shuffle_up(), desc="Move window up"),
+
+
+   # Grow windows. If current window is on the edge of screen and direction
+   # will be to screen edge - window would shrink.
+   Key([mod, "control"], "left", lazy.layout.grow_left(), desc="Grow window to the left"),
+   Key([mod, "control"], "right", lazy.layout.grow_right(), desc="Grow window to the right"),
+   Key([mod, "control"], "down", lazy.layout.grow_down(), desc="Grow window down"),
+   Key([mod, "control"], "up", lazy.layout.grow_up(), desc="Grow window up"),
+   Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+
+
+   # Toggle between split and unsplit sides of stack.
+   # Split = all windows displayed
+   # Unsplit = 1 window displayed, like Max layout, but still with
+   # multiple stack panes
+   Key(
+       [mod, "shift"],
+       "Return",
+       lazy.layout.toggle_split(),
+       desc="Toggle between split and unsplit sides of stack",
+   ),
+   Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+
+
+   # Toggle between different layouts as defined below
+   Key([mod], "space", lazy.next_layout(), desc="Toggle between layouts"),
+
+
+   Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
+
+
+   Key(
+       [mod],
+       "f",
+       lazy.window.toggle_fullscreen(),
+       desc="Toggle fullscreen on the focused window",
+   ),
+   Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
+   Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
+   Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+   # Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+
+   # #CHANGE WORKSPACES
+   # Key(["alt", "shift" ], "Tab", lazy.screen.prev_group()),
+   # Key(["alt"], "Tab", lazy.screen.next_group()),
+
+   # CHANGE SCREENS
+   Key([mod, "shift"], "Tab", lazy.prev_screen()),
+   Key([mod], "Tab", lazy.next_screen()),
+
+   # Restart qtile
+   Key([mod, "shift"], "r", lazy.restart()),
+]
 
 
 # ------------------------------------------
@@ -58,32 +125,21 @@ group_names = ["1", "2", "3", "4", "5", "6"]
 
 groups = [
     Group(name=group_names[0], layout = "columns"),
-    Group(name=group_names[1], layout = "max"),
-    Group(name=group_names[2], screen_affinity=1, layout = "max"),
+    Group(name=group_names[1], layout = "max", matches=[Match(wm_class="jetbrains-idea")]),
+    Group(name=group_names[2], screen_affinity=1, layout = "max", matches=[Match(wm_class="google-chrome")]),
     Group(name=group_names[3], layout = "columns"),
     Group(name=group_names[4], layout = "columns"),
     Group(name=group_names[5], layout = "columns"),
-    ScratchPad("sc", [DropDown("term", "alacritty")]),
+    ScratchPad("scratchpad", [
+        DropDown("term", "alacritty"),
+        DropDown("keepassdd", "keepassxc", height=0.6)
+    ]),
+    #ScratchPad("keepass", [DropDown("keepassdd", "keepassxc", height=0.6)],"keepassxc"),
 ]
-
-def assign_app_to_group(client):
-    d = {}
-
-    d[group_names[1]] = ["jetbrains-idea"]
-    d[group_names[2]] = ["google-chrome"]
-    d[group_names[3]] = []
-    d[group_names[5]] = ["keepassxc"]
-
-    wm_class = client.window.get_wm_class()[0]
-
-    for i in range(len(d)):
-        if wm_class in list(d.values())[i]:
-            group = list(d.keys())[i]
-            client.togroup(group, switch_group=True)
 
 
 def group_keys():
-    keys = []
+    localkeys = []
     # Switch to the groups, we use fix mappings, because we also have 
     # at least one scratchpad
     keys_for_groups = ["1", "2", "3", "4", "5", "6", "7", "8", "9" ,"0"]
@@ -91,13 +147,14 @@ def group_keys():
     for index, group in enumerate(groups):
         if index < len(keys_for_groups):
             keys.extend([
-                Key([super], keys_for_groups[index], lazy.group[group.name].toscreen(), desc="Switch to group {}".format(group.name)),
-                Key([super, "shift"], keys_for_groups[index], lazy.window.togroup(group.name, switch_group=False), desc="Move focused window to group {}".format(group.name)),
+                Key([mod], keys_for_groups[index], lazy.group[group.name].toscreen(), desc="Switch to group {}".format(group.name)),
+                Key([mod, "shift"], keys_for_groups[index], lazy.window.togroup(group.name, switch_group=False), desc="Move focused window to group {}".format(group.name)),
             ])
     
     
-    keys.extend([Key([super], "F9", lazy.group["sc"].dropdown_toggle("term"))])
-    return keys
+    localkeys.extend([Key([mod], "F9", lazy.group["scratchpad"].dropdown_toggle("term"))])
+    localkeys.extend([Key([mod], "F1", lazy.group["scratchpad"].dropdown_toggle("keepassdd"))])
+    return localkeys
 
 keys.extend(group_keys())
 
@@ -112,7 +169,6 @@ default_font = "Noto Sans"
 font_size = 12
 
 
-terminal = guess_terminal()
 
 colors = {
     "bg" : ["#282828", "#282828"],
@@ -251,20 +307,6 @@ def init_widgets():
             },
             name_transform=lambda name: name.upper(),
         ),
-#         widget.PulseVolumeExtra(
-#             background = colors["bg1"],
-#             bar_colour_normal = colors["green"],
-#             bar_colour_high = colors["orange"],
-#             bar_colour_loud = colors["red"],
-#             bar_colour_mute = colors["gray8"],
-#             bar_height = 16,
-#             font = default_font,
-#             fontsize = font_size,
-#             icon_size = 16,
-#             bar_text_foreground = colors["fg"],
-#             mode = "bar",
-#             theme_path = "/usr/share/icons/Papirus-Dark",
-#         ),
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
         # widget.StatusNotifier(),
         widget.TextBox(
@@ -290,14 +332,6 @@ def init_widgets():
             background = colors["bg2"],
         ),
         slope(Orientation.TOP_RIGHT, colors["gray8"], colors["bg2"]), 
-        # widget.TextBox(
-        #    "",
-        #    fontsize=22,
-        #    # fmt="<span rise='6500'>{}</span>",
-        #    padding=0,
-        #    background = colors["bg2"],
-        #    foreground = colors["gray8"],
-        # ),
         widget.QuickExit(
             default_text = "   [ logout ]    ",
             background = colors["gray8"],
@@ -370,9 +404,9 @@ screens = [
 
 # Drag floating layouts.
 mouse = [
-    Drag([super], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([super], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
-    Click([super], "Button2", lazy.window.bring_to_front()),
+    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
 
@@ -388,9 +422,9 @@ def start_once():
     home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/scripts/autostart.sh'])
 
-@hook.subscribe.client_new
-def new_client(client):
-    assign_app_to_group(client)
+# @hook.subscribe.client_new
+# def new_client(client):
+#     assign_app_to_group(client)
 
 
 dgroups_key_binder = None

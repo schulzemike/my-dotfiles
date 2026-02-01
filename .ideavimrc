@@ -99,7 +99,7 @@ let g:WhichKeyDesc_file_nav_goto_content = "<leader>fc Search for file content"
 let g:WhichKeyDesc_file_nav_show_recent_files = "<leader>fr Show recent files"
 let g:WhichKeyDesc_file_nav_show_recent_locations = "<leader>fl Show recent locations"
 
-let g:WhichKeyDesc_close_tab = "<leader>q Close active tab"
+let g:WhichKeyDesc_close_tab = "<leader>q Quick JavaDoc"
 
 let g:WhichKeyDesc_refactoring = "<leader>r Refactoring menu"
 let g:WhichKeyDesc_refactoring_rename = "<leader>rn Rename element"
@@ -206,8 +206,8 @@ map <leader><leader> <Action>(RecentFiles)
 map <leader>fl <action>(RecentLocations)
 map <leader>fs <action>(NewScratchFile)
 
-" Close active tab
-map <leader>q <action>(CloseContent)
+" Documentation
+map <leader>q <action>(QuickJavaDoc)
 
 " Refactoring
 map <leader>rn <Action>(RenameElement)

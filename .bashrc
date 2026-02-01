@@ -29,3 +29,5 @@ fastfetch
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/mike/.local/sdkman"
 [[ -s "/home/mike/.local/sdkman/bin/sdkman-init.sh" ]] && source "/home/mike/.local/sdkman/bin/sdkman-init.sh"
+
+
