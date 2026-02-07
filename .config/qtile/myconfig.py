@@ -51,8 +51,7 @@ keys = [
    Key([mod], "right", lazy.layout.right(), desc="Move focus to right"),
    Key([mod], "down", lazy.layout.down(), desc="Move focus down"),
    Key([mod], "up", lazy.layout.up(), desc="Move focus up"),
-   Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
-   
+
 
    # Move windows between left/right columns or move up/down in current stack.
    # Moving out of range in Columns layout will create new column.
@@ -315,6 +314,24 @@ def init_widgets():
             forground = colors["gray8"],
             background = colors["bg1"],
         ),
+        # does not work in VM - i guess it just times out
+        # widget.Wttr(
+        #     lang='de',
+        #     format="3",
+        #     location="Wuensdorf",
+        #     update_interval=6000,
+        #     units="m",
+        #     parse=lambda r: r.strip() or "Offline",
+        # ),
+        widget.GenPollCommand(
+            cmd="curl -s 'wttr.in/Wuensdorf?format=1' || echo 'N/A'",
+            shell=True,
+            update_interval=1800,
+            parse=lambda x: x.strip(),
+            foreground = colors["fg"],
+            background = colors["bg1"],
+            padding = 1,
+        ),
         widget.Spacer(
             length = 12,
             background = colors["bg1"],
@@ -339,6 +356,7 @@ def init_widgets():
         ),
     ]
     return widgets
+
 
 def init_widgets_for_other_screens():
     widgets = init_widgets()

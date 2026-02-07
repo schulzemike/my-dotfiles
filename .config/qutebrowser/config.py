@@ -134,6 +134,9 @@ config.set('content.local_content_can_access_file_urls', False, 'file:///home/mi
 
 config.set('hints.mode','word')
 
+# my config changes
+config.set('downloads.position','bottom')
+config.set('downloads.remove_finished',30000)
 
 # search engines
 c.url.searchengines = {
@@ -158,7 +161,7 @@ config.source('gruvbox.py')
 # c.content.user_stylesheets = ["~/.local/share/qutebrowser/solarized-everything-css/css/gruvbox/gruvbox-all-sites.css"]
 # c.content.user_stylesheets = ["~/.local/share/qutebrowser/solarized-everything-css/css/gruvbox/gruvbox-github.css"]
 
-config.bind('<Alt-u>', 'spawn --userscript qute-keepassxc --key 2BEB40EE7C653D4E62E3901EB097AAD8FFCD7ECD', mode='insert')
+config.bind('<Alt-p>', 'spawn --userscript qute-keepassxc --key 2BEB40EE7C653D4E62E3901EB097AAD8FFCD7ECD', mode='insert')
 config.bind('pw', 'spawn --userscript qute-keepassxc --key 2BEB40EE7C653D4E62E3901EB097AAD8FFCD7ECD', mode='normal')
 
 

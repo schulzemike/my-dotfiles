@@ -19,6 +19,7 @@ opt.iskeyword:append("-")
 -- line numbers
 opt.number = true
 opt.relativenumber = true
+opt.numberwidth = 6
 
 -- line wrapping
 opt.wrap = false
