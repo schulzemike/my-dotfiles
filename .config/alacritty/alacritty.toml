@@ -1,22 +1,13 @@
+[cursor]
+style = { shape = "Beam", blinking = "Off" }
+vi_mode_style = { shape = "Underline", blinking = "On" }
 
 [font]
-size = 10.0
-
-[font.bold]
-family = "JetBrainsMono NFM"
-style = "Bold"
-
-[font.bold_italic]
-family = "JetBrainsMono NFM"
-style = "Bold Italic"
-
-[font.italic]
-family = "JetBrainsMono NFM"
-style = "Italic"
-
-[font.normal]
-family = "JetBrainsMono NFM"
-style = "Regular"
+normal = { family = "JetBrainsMono NFM Light", style = "Regular" }
+bold = { family = "JetBrainsMono NFM", style = "Bold" }
+italic = { family = "JetBrainsMono NFM Light", style = "Italic" }
+bold_italic = { family = "JetBrainsMono NFM", style = "Bold Italic" }
+size = 11.0
 
 [scrolling]
 history = 50000
@@ -31,6 +22,7 @@ bindings = [
 import = [
     "~/.config/alacritty/themes/gruvbox_dark.toml"
 ]
+
 
 [env]
 WINIT_X11_SCALE_FACTOR = "1.0"
