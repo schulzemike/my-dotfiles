@@ -17,6 +17,7 @@ alias pacman="sudo pacman"
 alias vi="nvim"
 
 
+
 alias bashp="vi $HOME/.bashrc-personal"
 alias bashw="vi $HOME/.bashrc-work"
 
@@ -35,9 +36,9 @@ alias qtile-conf="cd $XDG_CONFIG_HOME/qtile"
 
 
 
-# --------------- nvm settings
-# export NVM_DIR="$HOME/.local/nvm"
-# source /usr/share/nvm/init-nvm.sh
+#
+# --------------- little helpers
+#
 
 create-script () {
     
@@ -47,6 +48,10 @@ create-script () {
 
     echo "#!/usr/bin/env bash" > $SCRIPT
     chmod +x $SCRIPT
+}
+
+cheat () {
+    [[ -z "$1" ]] && curl cheat.sh || curl cheat.sh/"$1"
 }
 
 # --------------- taskwarrior settings -----------------------------
