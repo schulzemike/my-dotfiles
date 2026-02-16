@@ -35,3 +35,9 @@ opt.shiftwidth = 4
 opt.softtabstop = 4
 opt.tabstop = 4
 
+
+
+vim.treesitter.language.register('markdown','vimwiki')
+
+
+
