@@ -131,7 +131,6 @@ groups = [
     Group(name=group_names[5], layout = "columns"),
     ScratchPad("scratchpad", [
         DropDown("term", "alacritty"),
-        DropDown("keepassdd", "keepassxc", height=0.6)
     ]),
     #ScratchPad("keepass", [DropDown("keepassdd", "keepassxc", height=0.6)],"keepassxc"),
 ]
@@ -152,7 +151,6 @@ def group_keys():
     
     
     localkeys.extend([Key([mod], "F9", lazy.group["scratchpad"].dropdown_toggle("term"))])
-    localkeys.extend([Key([mod], "F1", lazy.group["scratchpad"].dropdown_toggle("keepassdd"))])
     return localkeys
 
 keys.extend(group_keys())
