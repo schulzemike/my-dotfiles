@@ -1,6 +1,17 @@
-[cursor]
-style = { shape = "Beam", blinking = "Off" }
-vi_mode_style = { shape = "Underline", blinking = "On" }
+[general]
+import = [
+    "~/.config/alacritty/themes/gruvbox_dark.toml"
+]
+
+[env]
+WINIT_X11_SCALE_FACTOR = "1.0"
+
+[window]
+# padding = { x = 10, y = 10 }
+# opacity = 0.5
+
+[scrolling]
+history = 50000
 
 [font]
 normal = { family = "JetBrainsMono NFM Light", style = "Regular" }
@@ -9,8 +20,18 @@ italic = { family = "JetBrainsMono NFM Light", style = "Italic" }
 bold_italic = { family = "JetBrainsMono NFM", style = "Bold Italic" }
 size = 11.0
 
-[scrolling]
-history = 50000
+[colors]
+# defined in imported theme
+
+[cursor]
+style = { shape = "Beam", blinking = "Off" }
+vi_mode_style = { shape = "Underline", blinking = "On" }
+
+[terminal]
+
+[mouse]
+
+[hints]
 
 [keyboard]
 bindings = [
@@ -18,11 +39,5 @@ bindings = [
     { key = "Enter", mods = "Shift", action = "SpawnNewInstance" },
 ]
 
-[general]
-import = [
-    "~/.config/alacritty/themes/gruvbox_dark.toml"
-]
 
 
-[env]
-WINIT_X11_SCALE_FACTOR = "1.0"
