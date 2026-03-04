@@ -154,6 +154,8 @@ c.completion.open_categories = ['searchengines', 'quickmarks', 'bookmarks', 'his
 
 
 c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 9, 'right': 9}
+# When to show the tabs; possible values are always, never, switching, multiple
+c.tabs.show = "never"
 
 # theming
 # c.colors.webpage.darkmode.enabled = True
