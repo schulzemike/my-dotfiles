@@ -12,6 +12,7 @@ opt.clipboard:append("unnamedplus")
 opt.cursorline = true
 opt.guifont = {"JetBrainsMono MF", "h12"}
 opt.termguicolors = true
+opt.signcolumn = "yes"
 
 -- consider '-' dash as a part of the word
 opt.iskeyword:append("-")
@@ -30,12 +31,13 @@ opt.smartcase = true
 
 -- tab behaviour
 opt.autoindent = true
+opt.smartindent = true
 opt.expandtab = true
 opt.shiftwidth = 4
 opt.softtabstop = 4
 opt.tabstop = 4
 
-
+-- vim.diagnostics.config({ virtual_text = true }) -- inline diagnostics
 
 vim.treesitter.language.register('markdown','vimwiki')
 
