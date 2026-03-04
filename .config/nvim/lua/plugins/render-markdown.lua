@@ -9,6 +9,12 @@ return {
     config = function()
         require('render-markdown').setup({
             file_types = { 'markdown', 'vimwiki' },
+            heading = {
+                -- icons = { '󰬺 ','󰬻 ','󰬼 ','󰬽 ','󰬾 ','󰬿 ' },
+                width = { 'full','block','block','block','block','block' },
+                min_width = 50,
+                border = true,
+            }
         })
     end
 }
