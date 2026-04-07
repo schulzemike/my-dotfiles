@@ -141,11 +141,10 @@ config.set('downloads.remove_finished',30000)
 # search engines
 c.url.searchengines = {
 # note - if you use duckduckgo, you can make use of its built in bangs, of which there are many! https://duckduckgo.com/bangs
-        'DEFAULT': 'https://www.perplexity.ai/?q={}',
+        'DEFAULT': 'https://www.google.com/search?q={}',
         '!ddg': 'https://duckduckgo.com/?q={}',
-        '!g': 'https://www.google.com/search?q={}',
         '!aw': 'https://wiki.archlinux.org/?search={}',
-        '!apkg': 'https://archlinux.org/packages/?sort=&q={}&maintainer=&flagged=',
+        '!ap': 'https://archlinux.org/packages/?sort=&q={}&maintainer=&flagged=',
         '!gh': 'https://github.com/search?o=desc&q={}&s=stars',
         '!yt': 'https://www.youtube.com/results?search_query={}',
         }

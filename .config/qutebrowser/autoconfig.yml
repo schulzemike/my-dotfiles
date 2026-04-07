@@ -6,9 +6,3 @@
 
 config_version: 2
 settings:
-  bindings.commands:
-    global:
-      insert:
-        <Alt+u>: spawn --userscript qute-keepassxc --key 39B713774D74D181DBA2F1F043AAABB74213E540
-      normal:
-        pw: spawn --userscript qute-keepassxc --key 39B713774D74D181DBA2F1F043AAABB74213E540
