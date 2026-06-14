@@ -40,10 +40,6 @@ from qtile_extras.popup.toolkit import PopupRelativeLayout, PopupText, PopupSlid
 # specific config files
 from groups import groups
 from groups import assign_app_to_group
-from home-keys import key_binding
-
-
-keys = key_binding()
 
 
 
@@ -55,7 +51,103 @@ font_size = 12
 
 
 terminal = guess_terminal()
-super = "mod4"
+mod = "mod4"
+
+
+keys = [
+
+    # A list of available commands that can be bound to keys can be found
+    # at https://docs.qtile.org/en/latest/manual/config/lazy.html
+    # Switch between windows
+    Key([mod], "left", lazy.layout.left(), desc="Move focus to left"),
+    Key([mod], "right", lazy.layout.right(), desc="Move focus to right"),
+    Key([mod], "down", lazy.layout.down(), desc="Move focus down"),
+    Key([mod], "up", lazy.layout.up(), desc="Move focus up"),
+    Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+    
+
+    # Move windows between left/right columns or move up/down in current stack.
+    # Moving out of range in Columns layout will create new column.
+    Key([mod, "shift"], "left", lazy.layout.shuffle_left(), desc="Move window to the left"),
+    Key([mod, "shift"], "right", lazy.layout.shuffle_right(), desc="Move window to the right"),
+    Key([mod, "shift"], "down", lazy.layout.shuffle_down(), desc="Move window down"),
+    Key([mod, "shift"], "up", lazy.layout.shuffle_up(), desc="Move window up"),
+
+
+    # Grow windows. If current window is on the edge of screen and direction
+    # will be to screen edge - window would shrink.
+    Key([mod, "control"], "left", lazy.layout.grow_left(), desc="Grow window to the left"),
+    Key([mod, "control"], "right", lazy.layout.grow_right(), desc="Grow window to the right"),
+    Key([mod, "control"], "down", lazy.layout.grow_down(), desc="Grow window down"),
+    Key([mod, "control"], "up", lazy.layout.grow_up(), desc="Grow window up"),
+    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+
+
+    # Toggle between split and unsplit sides of stack.
+    # Split = all windows displayed
+    # Unsplit = 1 window displayed, like Max layout, but still with
+    # multiple stack panes
+    Key(
+        [mod, "shift"],
+        "Return",
+        lazy.layout.toggle_split(),
+        desc="Toggle between split and unsplit sides of stack",
+    ),
+    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+
+
+    # Toggle between different layouts as defined below
+    Key([mod], "space", lazy.next_layout(), desc="Toggle between layouts"),
+
+
+    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
+
+
+    Key(
+        [mod],
+        "f",
+        lazy.window.toggle_fullscreen(),
+        desc="Toggle fullscreen on the focused window",
+    ),
+    Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
+    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
+    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    # Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+
+    # #CHANGE WORKSPACES
+    # Key(["alt", "shift" ], "Tab", lazy.screen.prev_group()),
+    # Key(["alt"], "Tab", lazy.screen.next_group()),
+
+    # CHANGE SCREENS
+    Key([mod, "shift"], "Tab", lazy.prev_screen()),
+    Key([mod], "Tab", lazy.next_screen()),
+
+    # Restart qtile
+    Key([mod, "shift"], "r", lazy.restart()),
+]
+
+
+
+def group_keys():
+    localkeys = []
+    # Switch to the groups, we use fix mappings, because we also have 
+    # at least one scratchpad
+    keys_for_groups = ["1", "2", "3", "4", "5", "6", "7", "8", "9" ,"0"]
+    
+    for index, group in enumerate(groups):
+        if index < len(keys_for_groups):
+            keys.extend([
+                Key([mod], keys_for_groups[index], lazy.group[group.name].toscreen(), desc="Switch to group {}".format(group.name)),
+                Key([mod, "shift"], keys_for_groups[index], lazy.window.togroup(group.name, switch_group=False), desc="Move focused window to group {}".format(group.name)),
+            ])
+    
+    
+    localkeys.extend([Key([mod], "F9", lazy.group["scratchpad"].dropdown_toggle("term"))])
+    localkeys.extend([Key([mod], "F1", lazy.group["scratchpad"].dropdown_toggle("keepassdd"))])
+    return localkeys
+
+keys.extend(group_keys())
+
 
 colors = {
     "bg" : ["#282828", "#282828"],
@@ -173,12 +265,10 @@ VOLUME_NOTIFICATION = PopupRelativeLayout(
 
 def init_widgets():
     widgets = [
-        widget.GenPollCommand(
+        widget.TextBox(
+            " ",
             background = colors["bg1"],
-            cmd = "${XDG_CONFIG_HOME}/qtile/scripts/w_status_hostsystem.sh \#cc241d",
             padding = 11,
-            shell = True,
-            update_interval = 30,
         ),
         slope(Orientation.TOP_LEFT, colors["bg1"], colors["gray8"]),
         widget.Spacer(
@@ -286,13 +376,6 @@ def init_widgets():
     ]
     return widgets
 
-def init_widgets_for_other_screens():
-    widgets = init_widgets()
-    # delete the systray
-    # del widgets[7:9] if more widgets have to be deleted
-    del widgets[len(widgets) - 6]
-    return widgets
-
 
 screens = [
     Screen(
@@ -327,9 +410,9 @@ screens = [
 
 # Drag floating layouts.
 mouse = [
-    Drag([super], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([super], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
-    Click([super], "Button2", lazy.window.bring_to_front()),
+    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
 
