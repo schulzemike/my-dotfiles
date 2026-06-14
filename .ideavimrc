@@ -37,8 +37,8 @@ set visualbell
 
 " Use system clipboard
 set clipboard+=unnamed
-
 let mapleader = " "
+
 
 "" reload this config file from with intellij idea
 nnoremap <leader>sr :source ~/.ideavimrc<CR>
@@ -230,6 +230,7 @@ nmap <leader>gb <Action>(Forward)
 map <leader>gc <Action>(CheckinProject)
 map <leader>gs <Action>(ActivateVersionControlToolWindow)
 map <leader>gb <Action>(Git.Branches)
+map <leader>gw <Action>(Git.WorkingTrees.Open)
 
 " Errors
 map <leader>en <Action>(ReSharperGotoNextErrorInSolution)

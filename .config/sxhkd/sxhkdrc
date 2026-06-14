@@ -31,9 +31,9 @@ super + x
 super + r
     rofi-theme-selector
 
-#alacritty
+#Terminal
 super + Return
-    alacritty
+    kitty
 
 #Xkill
 super + Escape

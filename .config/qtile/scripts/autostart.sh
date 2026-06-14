@@ -17,3 +17,5 @@ run_once dex -a
 # autostart flameshot
 run_once flameshot
 
+run_once dunst
+

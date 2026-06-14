@@ -141,7 +141,7 @@ config.set('downloads.remove_finished',30000)
 # search engines
 c.url.searchengines = {
 # note - if you use duckduckgo, you can make use of its built in bangs, of which there are many! https://duckduckgo.com/bangs
-        'DEFAULT': 'https://www.google.com/search?q={}',
+        'DEFAULT': 'https://www.google.com/search?udm=50&q={}',
         '!ddg': 'https://duckduckgo.com/?q={}',
         '!aw': 'https://wiki.archlinux.org/?search={}',
         '!ap': 'https://archlinux.org/packages/?sort=&q={}&maintainer=&flagged=',
@@ -164,6 +164,12 @@ config.source('gruvbox.py')
 
 config.bind('<Alt-p>', 'spawn --userscript qute-keepassxc --key 2BEB40EE7C653D4E62E3901EB097AAD8FFCD7ECD', mode='insert')
 config.bind('pw', 'spawn --userscript qute-keepassxc --key 2BEB40EE7C653D4E62E3901EB097AAD8FFCD7ECD', mode='normal')
+
+config.bind('<z><l>', 'spawn --userscript qute-pass --username-target secret --username-pattern "username: (.+)"')
+#config.bind('<z><l>', 'spawn --userscript qute-pass --username-target secret')
+config.bind('<z><u><l>', 'spawn --userscript qute-pass --username-only')
+config.bind('<z><p><l>', 'spawn --userscript qute-pass --password-only')
+config.bind('<z><o><l>', 'spawn --userscript qute-pass --otp-only')
 
 
 

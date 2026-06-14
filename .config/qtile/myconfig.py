@@ -28,8 +28,10 @@ import os
 import subprocess
 from enum import Enum
 from libqtile import bar, layout, hook, widget
+from libqtile.backend.base.window import Window
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
+from libqtile.log_utils import logger
 from libqtile.utils import guess_terminal
 from libqtile.widget.textbox import TextBox
 
@@ -40,6 +42,7 @@ from libqtile.widget.textbox import TextBox
 
 terminal = guess_terminal()
 mod = "mod4"
+alt = "mod1"
 
 
 keys = [
@@ -90,12 +93,7 @@ keys = [
    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
 
 
-   Key(
-       [mod],
-       "f",
-       lazy.window.toggle_fullscreen(),
-       desc="Toggle fullscreen on the focused window",
-   ),
+   Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen on the focused window"),
    Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
@@ -108,6 +106,10 @@ keys = [
    # CHANGE SCREENS
    Key([mod, "shift"], "Tab", lazy.prev_screen()),
    Key([mod], "Tab", lazy.next_screen()),
+
+   # Apps and Launcher
+   Key([mod], "F12", lazy.spawn(os.path.expanduser("~/.config/rofi/scripts/main.sh")), desc="my custom menu"),
+   Key([mod, alt], "f", lazy.spawn(["kitty", "yazi"]), desc="open the file-manager (yazi)"),
 
    # Restart qtile
    Key([mod, "shift"], "r", lazy.restart()),
@@ -125,12 +127,12 @@ group_names = ["1", "2", "3", "4", "5", "6"]
 groups = [
     Group(name=group_names[0], layout = "columns"),
     Group(name=group_names[1], layout = "max", matches=[Match(wm_class="jetbrains-idea")]),
-    Group(name=group_names[2], screen_affinity=1, layout = "max", matches=[Match(wm_class="google-chrome")]),
+    Group(name=group_names[2], screen_affinity=1, layout = "max", matches=[Match(wm_class="google-chrome"), Match(wm_class="qutebrowser")]),
     Group(name=group_names[3], layout = "columns"),
-    Group(name=group_names[4], layout = "columns"),
+    Group(name=group_names[4], layout = "columns", matches=[Match(wm_class="keepassxc")]),
     Group(name=group_names[5], layout = "columns"),
     ScratchPad("scratchpad", [
-        DropDown("term", "alacritty"),
+        DropDown("term", "kitty"),
     ]),
     #ScratchPad("keepass", [DropDown("keepassdd", "keepassxc", height=0.6)],"keepassxc"),
 ]
@@ -162,7 +164,7 @@ keys.extend(group_keys())
 # Config values
 margin = 10
 
-default_font = "Noto Sans"
+default_font = "Noto Sans Nerd Font"
 font_size = 12
 
 
@@ -228,10 +230,9 @@ extension_defaults = widget_defaults.copy()
 Orientation = Enum("Orientation", ["TOP_LEFT", "TOP_RIGHT", "BOTTOM_LEFT", "BOTTOM_RIGHT"])
 
 #      
+# 
 def slope(orientation, fg_color, bg_color): 
-#    icon = ""
     icon = "-"
-
     match orientation:
         case Orientation.TOP_LEFT:
             icon = ""
@@ -322,13 +323,18 @@ def init_widgets():
         #     parse=lambda r: r.strip() or "Offline",
         # ),
         widget.GenPollCommand(
-            cmd="curl -s 'wttr.in/Wuensdorf?format=1' || echo 'N/A'",
+            # cmd="curl -s 'wttr.in/$LOCATION?format=1' || echo 'N/A'",
+            cmd="${XDG_CONFIG_HOME}/qtile/scripts/wttr.sh",
             shell=True,
             update_interval=1800,
             parse=lambda x: x.strip(),
             foreground = colors["fg"],
             background = colors["bg1"],
             padding = 1,
+            mouse_callbacks={
+               "Button1": lazy.spawn(f"feh --class FloatingWttr /tmp/wttr.png"),
+               "Button3": lazy.spawn(f"feh --class FloatingWttrDia /tmp/wttr2.png")
+            }
         ),
         widget.Spacer(
             length = 12,
@@ -345,6 +351,9 @@ def init_widgets():
         widget.Clock(format="%a. %d.%m. %H:%M:%S",
             foreground = colors["fg"],
             background = colors["bg2"],
+            mouse_callbacks={
+                "Button1": lazy.spawn("kitty --class FloatingCal lvsk-calendar"),
+            }
         ),
         slope(Orientation.TOP_RIGHT, colors["gray8"], colors["bg2"]), 
         widget.QuickExit(
@@ -363,10 +372,7 @@ def init_widgets_for_other_screens():
     del widgets[len(widgets) - 6]
     return widgets
 
-
-screens = [
-    Screen(
-        top=bar.Bar(
+primaryBar = bar.Bar(
             init_widgets(),
             size=24,
             margin=[margin, margin, 0, margin],
@@ -376,7 +382,17 @@ screens = [
             background=colors["bg0_h"],
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
-        ),
+        )
+secondaryBar = bar.Bar(
+            init_widgets_for_other_screens(),
+            size=24,
+            margin=[margin, margin, 0, margin],
+            background=colors["bg0_h"],
+        )
+
+screens = [
+    Screen(
+        top=primaryBar,
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
         # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
@@ -389,24 +405,13 @@ screens = [
         wallpaper_mode="fill",
     ),
     Screen(
-        top=bar.Bar(
-            init_widgets_for_other_screens(),
-            size=24,
-            margin=[margin, margin, 0, margin],
-            background=colors["bg0_h"],
-        ),
-        # wallpaper="~/.local/share/wallpapers/tall-trees-forest-mountains-covered-with-fog.jpg",
+        top=secondaryBar,
         wallpaper="~/.local/share/wallpapers/beautiful-shot-snowy-mountain-sunset.jpg",
         # set the mode to "fill" or "stretch"
         wallpaper_mode="fill",
     ),
     Screen(
-        top=bar.Bar(
-            init_widgets_for_other_screens(),
-            size=24,
-            margin=[margin, margin, 0, margin],
-            background=colors["bg0_h"],
-        ),
+        top=secondaryBar,
         wallpaper="~/.local/share/wallpapers/beautiful-shot-snowy-mountain-sunset.jpg",
         # set the mode to "fill" or "stretch"
         wallpaper_mode="fill",
@@ -424,23 +429,6 @@ mouse = [
     Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
-
-
-
-
-
-
-
-
-
-@hook.subscribe.startup_once
-def start_once():
-    home = os.path.expanduser('~')
-    subprocess.call([home + '/.config/qtile/scripts/autostart.sh'])
-
-# @hook.subscribe.client_new
-# def new_client(client):
-#     assign_app_to_group(client)
 
 
 dgroups_key_binder = None
@@ -462,10 +450,61 @@ floating_layout = layout.Floating(
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
         Match(wm_class="de-eurodata-commons-swing-AbstractSwingApplication"),
+        Match(wm_class="FloatingWttr"),
+        Match(wm_class="FloatingWttrDia"),
+        Match(wm_class="FloatingCal"),
     ],
     border_focus=colors["gray"],
+    no_reposition_rules=[
+        Match(wm_class="FloatingWttr"),
+        Match(wm_class="FloatingWttrDia"),
+        # Match(wm_class="FloatingCal"),
+   ],
     
 )
+
+
+#
+# --------- Hooks ------------------
+#
+
+@hook.subscribe.startup_once
+def start_once():
+    home = os.path.expanduser('~')
+    subprocess.call([home + '/.config/qtile/scripts/autostart.sh'])
+
+@hook.subscribe.startup
+def _():
+    primaryBar.window.window.set_property("QTILE_BAR", 1, "CARDINAL", 32)
+    secondaryBar.window.window.set_property("QTILE_BAR", 1, "CARDINAL", 32)
+    
+
+@hook.subscribe.client_new
+def move_keepass_popup_dialog_to_current_screen(client: Window):
+    # Abfrage für KeePassX oder KeePassXC
+    wm_class = client.get_wm_class()
+    width, height = client.get_size()
+    screen_width = client.qtile.current_screen.width
+
+    # logger.warning(height)
+
+    if wm_class and any(name in "".join(wm_class).lower() for name in ["keepassxc"]):
+        # Erkennen, ob es sich um ein Dialog/Popup handelt
+        # (Optionale Prüfung, falls das Hauptfenster woanders bleiben soll)
+        if client.floating or (hasattr(client, "get_wm_type") and (wm_type := client.get_wm_type()) and "dialog" in wm_type):
+            current_group = client.qtile.current_screen.group
+            client.togroup(current_group.name)
+
+    if wm_class and any(name in "".join(wm_class) for name in ["FloatingWttr"]):
+        client.set_position_floating(screen_width - width - 50,50)
+
+    if wm_class and any(name in "".join(wm_class) for name in ["FloatingWttrDia"]):
+        client.set_position_floating(screen_width - width - 50, 50 + 490 + 25)
+
+
+    if wm_class and any(name in "".join(wm_class) for name in ["FloatingCal"]):
+        #client.set_position_floating(screen_width / 2 - 255, 50)
+        client.set_size_floating(570,520)
 
 
 auto_fullscreen = True

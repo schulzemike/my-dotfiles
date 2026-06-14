@@ -6,3 +6,5 @@
 
 config_version: 2
 settings:
+  content.notifications.enabled:
+    https://git.eurodata.de: true
