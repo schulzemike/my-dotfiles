@@ -453,6 +453,7 @@ floating_layout = layout.Floating(
         Match(wm_class="FloatingWttr"),
         Match(wm_class="FloatingWttrDia"),
         Match(wm_class="FloatingCal"),
+        Match(wm_class="pinentry-gtk"),
     ],
     border_focus=colors["gray"],
     no_reposition_rules=[
