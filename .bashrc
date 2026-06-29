@@ -2,6 +2,9 @@
 # ~/.bashrc
 #
 
+# load secrets already at login - so that tools that use environment variables can use them
+[[ -f ~/.bashrc-secret ]] && . ~/.bashrc-secret
+
 set -o vi
 HISTSIZE=5000
 
@@ -13,21 +16,15 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 PS1='[\u@\h \W]\$ '
 
-if [ -f $HOME/.bashrc-personal ]; then
-    source $HOME/.bashrc-personal
-fi
-
-if [ -f $HOME/.bashrc-work ]; then
-    source $HOME/.bashrc-work
-fi
+[[ -f ~/.bashrc-personal ]] && . ~/.bashrc-personal
+[[ -f ~/.bashrc-work ]] && . ~/.bashrc-work
 
 eval "$(starship init bash)"
-fastfetch
 
 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/mike/.local/sdkman"
-[[ -s "/home/mike/.local/sdkman/bin/sdkman-init.sh" ]] && source "/home/mike/.local/sdkman/bin/sdkman-init.sh"
+[[ -s "~/.local/sdkman/bin/sdkman-init.sh" ]] && . ~/.local/sdkman/bin/sdkman-init.sh
 
 

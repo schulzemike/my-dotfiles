@@ -1,0 +1,83 @@
+@import "my-gruvbox.rasi"
+
+configuration {
+    show-icons: false;
+}
+
+/* Base Window Configuration */
+window {
+    width: 600px;
+    border: 2px;
+    border-color: @fg1;
+    background-color: @bg1;
+    padding: 10px;
+}
+
+/* Arrange the Main Layout elements */
+mainbox {
+    /* Changes default order: Tab bar first, then Search, then List */
+    children: [ mode-switcher, inputbar, listview ];
+    spacing: 10px;
+}
+
+/* Tab Bar / Mode Switcher Layout */
+mode-switcher {
+    orientation: horizontal;
+    spacing: 5px;
+}
+
+button {
+    padding: 8px;
+    background-color: #2d2d2d;
+    text-color: #aaaaaa;
+    horizontal-align: 0.5;
+}
+
+/* Highlight the active Tab */
+button selected {
+    background-color: #5294e2;
+    text-color: #ffffff;
+}
+
+/* Input Bar (Search Box) */
+inputbar {
+    padding: 6px;
+    background-color: @bg1;
+    border-color: @highlight;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    text-color: @fg2;
+    padding: 0px 5px 0px 0px;
+}
+
+entry {
+    text-color: #ffffff;
+}
+
+/* TWO COLUMN LIST VIEW */
+listview {
+    columns: 2;         /* Forces two columns side-by-side */
+    lines: 8;           /* Number of rows per column visible at once */
+    fixed-height: true;
+    dynamic: true;
+    cycle: true;
+    scrollbar: false;
+    spacing: 5px;
+}
+
+element {
+    padding: 8px;
+    background-color: transparent;
+    text-color: @highlight;
+}
+
+element-text {
+    text-color: inherit;
+}
+
+element selected {
+    background-color: @bg2;
+}
+
