@@ -104,15 +104,15 @@ keys = [
    # Key(["alt"], "Tab", lazy.screen.next_group()),
 
    # CHANGE SCREENS
-   Key([mod, "shift"], "Tab", lazy.prev_screen()),
-   Key([mod], "Tab", lazy.next_screen()),
+   Key([mod, "shift"], "Tab", lazy.prev_screen(), desc="Select previous screen"),
+   Key([mod], "Tab", lazy.next_screen(), desc="Select next screen"),
 
    # Apps and Launcher
    Key([mod], "F12", lazy.spawn(os.path.expanduser("~/.config/rofi/scripts/main.sh")), desc="my custom menu"),
    Key([mod, alt], "f", lazy.spawn(["kitty", "yazi"]), desc="open the file-manager (yazi)"),
 
    # Restart qtile
-   Key([mod, "shift"], "r", lazy.restart()),
+   Key([mod, "shift"], "r", lazy.restart(), desc="Restart qtile"),
 ]
 
 
@@ -152,7 +152,7 @@ def group_keys():
             ])
     
     
-    localkeys.extend([Key([mod], "F9", lazy.group["scratchpad"].dropdown_toggle("term"))])
+    localkeys.extend([Key([mod], "F9", lazy.group["scratchpad"].dropdown_toggle("term"), desc="Open scratchpad")])
     return localkeys
 
 keys.extend(group_keys())
@@ -256,7 +256,7 @@ def init_widgets():
     widgets = [
         widget.GenPollCommand(
             background = colors["bg1"],
-            cmd = "${XDG_CONFIG_HOME}/qtile/scripts/w_status_hostsystem.sh \#cc241d",
+            cmd = "${XDG_CONFIG_HOME}/qtile/scripts/w_status_hostsystem.sh \\#cc241d",
             padding = 11,
             shell = True,
             update_interval = 30,

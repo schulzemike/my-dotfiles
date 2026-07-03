@@ -3,6 +3,9 @@ require("core.keymaps")
 
 vim.lsp.enable({"bashls", "lua_ls"})
 
+vim.cmd([[iabbrev ddate <C-R>=strftime('%Y-%m-%d')<CR>]])
+-- vim.opt_local.conceallevel = 2 -- Blendet die Backticks und Syntaxelemente aus
+-- vim.opt_local.concealcursor = "nc" -- Verbirgt sie im Normal- und Command-Modus
 
 
 vim.pack.add({
@@ -32,7 +35,15 @@ require('render-markdown').setup({
         width = { 'full','block','block','block','block','block' },
         min_width = 50,
         border = true,
-    }
+    },
+--     anti_conceal = {
+--         -- Verhindert, dass der Text unter dem Cursor wieder auftaucht und das Bild verschiebt
+--         enabled = false, 
+--     },
+--     code = {
+--         -- Schließe 'mermaid' von den Standard-Codeblock-Hintergründen aus
+--         exclude_languages = { 'mermaid' }, 
+--     },
 })
 
 require("nvim-treesitter").setup({

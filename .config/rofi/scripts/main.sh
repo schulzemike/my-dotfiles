@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Define options
-options="Config Files\nLogs"
+options="Config Files\nLogs\nKeybindings"
 
 # Call first menu
 choice=$(echo -e "$options" | rofi -dmenu -p "System" -theme-str 'element-icon { enabled: false; }')
@@ -14,5 +14,8 @@ case "$choice" in
     "Logs")
         # Call another menu
         ~/.config/rofi/scripts/open-log.sh
+        ;;
+    "Keybindings")
+        ~/.config/qtile/scripts/keybindings.sh
         ;;
 esac
