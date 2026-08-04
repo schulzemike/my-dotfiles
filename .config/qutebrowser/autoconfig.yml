@@ -7,4 +7,4 @@
 config_version: 2
 settings:
   content.notifications.enabled:
-    https://git.eurodata.de: true
+    https://gitlab.adesso-group.com: true

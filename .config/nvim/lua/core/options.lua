@@ -23,7 +23,8 @@ opt.relativenumber = true
 opt.numberwidth = 6
 
 -- line wrapping
-opt.wrap = false
+opt.wrap = true
+opt.linebreak = true
 
 -- search settings
 opt.ignorecase = true

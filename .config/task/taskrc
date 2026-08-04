@@ -33,3 +33,8 @@ calendar.monthsperline=4
 #include solarized-light-256.theme
 #include no-color.theme
 include gruvbox.theme
+context.sportfreunde.read=project:work.sportfreunde
+context.sportfreunde.write=project:work.sportfreunde
+context.myvm.read=project:work.myvm
+context.myvm.write=project:work.myvm
+context=sportfreunde

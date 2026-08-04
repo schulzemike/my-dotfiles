@@ -149,6 +149,10 @@ c.url.searchengines = {
         '!yt': 'https://www.youtube.com/results?search_query={}',
         }
 
+c.url.default_page = 'https://chat.adesso.de'
+c.url.start_pages = ['https://o365adessogroup.sharepoint.com']
+
+
 c.completion.open_categories = ['searchengines', 'quickmarks', 'bookmarks', 'history', 'filesystem']
 
 

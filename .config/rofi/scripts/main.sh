@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Define options
-options="Config Files\nLogs\nKeybindings"
+options="Config Files\nEmojis\nLogs\nKeybindings"
 
 # Call first menu
 choice=$(echo -e "$options" | rofi -dmenu -p "System" -theme-str 'element-icon { enabled: false; }')
@@ -18,4 +18,8 @@ case "$choice" in
     "Keybindings")
         ~/.config/qtile/scripts/keybindings.sh
         ;;
+    "Emojis")
+        rofi -modi emoji -show emoji
+        ;;
+
 esac
